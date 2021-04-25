@@ -55,10 +55,10 @@ public class CreateServlet extends HttpServlet {
 
                 // フォームに初期値を設定、さらにエラーメッセージを送る
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("task2", m);
+                request.setAttribute("task", m);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/tasks2/new.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/task2/new.jsp");
                 rd.forward(request, response);
             } else {
                 // データベースに保存
@@ -69,19 +69,9 @@ public class CreateServlet extends HttpServlet {
                 em.close();
 
                 // indexのページにリダイレクト
-                response.sendRedirect(request.getContextPath() + "/index");;
+                response.sendRedirect(request.getContextPath() + "/index");
             }
 
-
-
-            // データベースに保存
-            em.getTransaction().begin();
-            em.persist(m);
-            em.getTransaction().commit();
-            request.getSession().setAttribute("flush", "登録が完了しました。");
-            em.close();
-
-            response.sendRedirect(request.getContextPath() + "/index");
         }
     }
 
